@@ -24,9 +24,26 @@ const App = (): JSX.Element => {
     setTodos(newTodos);
   };
 
+  const handelCompleted = (id:string, completed:boolean): void => {
+    const newTodos = todos.map(todo => {
+      if(todo.id === id){
+        return {
+          ...todo,
+          completed
+        }
+      }
+      return todo
+    })
+    setTodos(newTodos)
+  } 
+
   return (
     <div className="todoapp">
-      <Todos onRemoveTodo={handleRemove} todos={todos} />
+      <Todos 
+        onToggleCompleteTodo={handelCompleted}
+        onRemoveTodo={handleRemove}
+        todos={todos}
+        />
     </div>
   );
 };
