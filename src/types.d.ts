@@ -7,3 +7,5 @@ export interface Todo {
 }
 
 export type ListOfTodos = Todo[]
+
+export type Filtervalue = typeof TODO_FILTERS[keyof typeof TODO_FILTERS]

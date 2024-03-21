@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Todos } from "./components/Todos";
+import { TODO_FILTERS } from "./const";
+import { Filtervalue } from "./types";
+import { Footer } from "./components/Footer";
 
 const mockTodos = [
   { id: "1", title: "Enviar CV", completed: true },
@@ -18,6 +21,7 @@ const mockTodos = [
 const App = (): JSX.Element => {
   //no hace falta tiparlo ya que, por inferencia, tenemos toda la información
   const [todos, setTodos] = useState(mockTodos);
+  const [filterSelected, setFilterSelected] = useState<Filtervalue>(TODO_FILTERS.ALL)
 
   const handleRemove = (id: string): void => {
     const newTodos = todos.filter((todo) => todo.id !== id);
@@ -37,6 +41,13 @@ const App = (): JSX.Element => {
     setTodos(newTodos)
   } 
 
+  const handleFilterChange = (filter: Filtervalue): void => {
+    setFilterSelected(filter)
+  }
+
+  const activeCount = todos.filter(todo => !todo.completed).length
+  const completedCount = todos.length - activeCount
+
   return (
     <div className="todoapp">
       <Todos 
@@ -44,6 +55,13 @@ const App = (): JSX.Element => {
         onRemoveTodo={handleRemove}
         todos={todos}
         />
+      <Footer
+        activeCount={activeCount}
+        completedCount={completedCount}
+        filterSelected={filterSelected}
+        onClearCompleted={()=> {}}
+        handleFilterChange={handleFilterChange}
+      />
     </div>
   );
 };
